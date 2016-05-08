@@ -1,4 +1,6 @@
 //Priprava knjižnic
+
+
 var formidable = require("formidable");
 var util = require('util');
 
@@ -169,6 +171,8 @@ streznik.get('/izpisiRacun/:oblika', function(zahteva, odgovor) {
   })
 })
 
+
+
 // Privzeto izpiši račun v HTML obliki
 streznik.get('/izpisiRacun', function(zahteva, odgovor) {
   odgovor.redirect('/izpisiRacun/html')
@@ -219,8 +223,16 @@ streznik.post('/prijava', function(zahteva, odgovor) {
     }
   
     odgovor.end();
- if(napaka2) sporocilo = "Prišlo je do napake pri registraciji nove stranke. Prosim preverite vnešene podatke in poskusite znova.";
-     else sporocilo = "Stranka je bila uspešno registrirana.";
+ if(napaka2 == true) 
+ {
+   sporocilo = "Prišlo je do napake pri registraciji nove stranke. Prosim preverite vnešene podatke in poskusite znova.";
+ }
+     else 
+     {
+       sporocilo = "Stranka je bila uspešno registrirana.";
+     }
+     
+     
      
      vrniStranke(function(napaka1, stranke) {
        vrniRacune(function(napaka2, racuni) {
@@ -236,7 +248,7 @@ streznik.post('/prijava', function(zahteva, odgovor) {
 streznik.get('/prijava', function(zahteva, odgovor) {
   vrniStranke(function(napaka1, stranke) {
       vrniRacune(function(napaka2, racuni) {
-          odgovor.render('prijava', {sporocilo: "", seznamStrank: stranke, seznamRacunov: racuni});
+        odgovor.render('prijava', {sporocilo: "", seznamStrank: stranke, seznamRacunov: racuni});
 
       }) 
     });
